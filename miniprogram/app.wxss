@@ -1,0 +1,104 @@
+/* 全局样式 */
+page {
+  background-color: #f5f6fa;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 卡片 */
+.card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin: 16rpx 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a1d28;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+/* 按钮 */
+.btn {
+  display: inline-block;
+  padding: 14rpx 28rpx;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  text-align: center;
+  border: none;
+  line-height: 1.5;
+}
+
+.btn-primary { background: #2f5597; color: #fff; }
+.btn-success { background: #27ae60; color: #fff; }
+.btn-warning { background: #f0ad4e; color: #fff; }
+.btn-danger  { background: #d9534f; color: #fff; }
+.btn-default { background: #e8e8e8; color: #333; }
+.btn-sm { padding: 8rpx 20rpx; font-size: 22rpx; }
+.btn-block { width: 100%; display: block; margin-top: 20rpx; }
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+}
+.badge-success { background: #e6f7e6; color: #27ae60; }
+.badge-warning { background: #fef5e7; color: #f0ad4e; }
+.badge-danger  { background: #fde8e8; color: #d9534f; }
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-box {
+  width: 620rpx; max-height: 80vh; background: #fff;
+  border-radius: 16rpx; overflow: hidden;
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28rpx 32rpx; border-bottom: 2rpx solid #f0f0f0;
+}
+.modal-title { font-size: 32rpx; font-weight: 600; }
+.modal-close { font-size: 36rpx; color: #999; }
+.modal-body { padding: 28rpx 32rpx; max-height: 60vh; overflow-y: auto; }
+.modal-footer {
+  display: flex; gap: 16rpx; padding: 20rpx 32rpx;
+  border-top: 2rpx solid #f0f0f0; justify-content: flex-end;
+}
+
+/* 空状态 */
+.empty { padding: 60rpx 20rpx; text-align: center; color: #999; font-size: 26rpx; }
+
+/* 表单 */
+.form-group { margin-bottom: 22rpx; }
+.form-label { font-size: 26rpx; color: #555; margin-bottom: 10rpx; font-weight: 500; }
+.form-input {
+  width: 100%; height: 80rpx; padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0; border-radius: 8rpx;
+  font-size: 28rpx; background: #fafafa; box-sizing: border-box;
+}
+
+/* 表格 */
+.table-scroll {
+  width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.table { min-width: 100%; }
+.table-row { display: flex; border-bottom: 1rpx solid #f0f0f0; }
+.table-row:last-child { border-bottom: none; }
+.table-header { background: #f7f8fc; font-weight: 600; color: #333; font-size: 24rpx; }
+.table-header .table-cell { padding: 18rpx 10rpx; }
+.table-cell {
+  padding: 14rpx 10rpx; font-size: 24rpx; color: #555;
+  display: flex; align-items: center; overflow: hidden; text-overflow: ellipsis;
+}

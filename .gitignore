@@ -1,0 +1,37 @@
+# ---- 基础占位文件（后续阶段将完善）----
+# 环境变量与秘密
+.env
+.env.*
+!.env.example
+
+# 微信开发者工具私有配置
+project.private.config.json
+
+# 依赖
+node_modules/
+
+# 数据库文件与数据目录
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# 密钥与证书
+*.pem
+*.key
+*.pfx
+*.p12
+id_rsa*
+id_ed25519*
+authorized_keys
+
+# 日志与临时文件
+*.log
+logs/
+*.tmp
+.DS_Store
+Thumbs.db
+
+# 备份文件
+*.bak
+*.backup

@@ -1,0 +1,20 @@
+.page{padding:20rpx;background:#f5f6fa;min-height:100vh}
+.loading{text-align:center;padding:40rpx;color:#999}
+.card{background:#fff;border-radius:12rpx;padding:24rpx;margin-bottom:16rpx}
+.row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.name{font-size:30rpx;font-weight:600;color:#1a1d28}
+.meta{display:flex;align-items:center;gap:12rpx;flex-wrap:wrap;margin-top:8rpx}
+.role{font-size:22rpx;padding:4rpx 14rpx;border-radius:20rpx;font-weight:500}
+.admin{background:#e8f0fe;color:#2f5597}
+.staff{background:#e8f5e9;color:#2e7d32}
+.status{font-size:22rpx;padding:4rpx 14rpx;border-radius:20rpx;font-weight:500}
+.active-s{background:#e8f5e9;color:#2e7d32}
+.pending-s{background:#fff3e0;color:#e65100}
+.disabled-s{background:#ffebee;color:#c62828}
+.actions{display:flex;gap:10rpx;margin-top:16rpx}
+.btn{font-size:22rpx;padding:8rpx 18rpx;border-radius:8rpx;border:1rpx solid #ddd;background:#fff;color:#555}
+.btn-approve{color:#2e7d32;border-color:#2e7d32}
+.btn-admin{color:#2f5597;border-color:#2f5597}
+.btn-disable{color:#c62828;border-color:#c62828}
+.btn-enable{color:#2e7d32;border-color:#2e7d32}
+.empty{text-align:center;padding:80rpx;color:#999;font-size:28rpx}

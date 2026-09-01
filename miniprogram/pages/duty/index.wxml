@@ -1,0 +1,93 @@
+<view>
+  <view class="mat-tabs">
+    <view class="mat-tab {{activeTab===0?'on':''}}" bindtap="switchTab" data-index="0">值班表</view>
+    <view class="mat-tab {{activeTab===1?'on':''}}" bindtap="switchTab" data-index="1">值班打卡</view>
+    <view class="mat-tab {{activeTab===2?'on':''}}" bindtap="switchTab" data-index="2">打卡记录</view>
+  </view>
+
+  <!-- ===== 值班表（卡片式）===== -->
+  <view wx:if="{{activeTab===0}}" style="padding:16rpx 20rpx 40rpx">
+    <view class="duty-action-bar" wx:if="{{isAdmin}}">
+      <button class="btn btn-primary btn-sm" bindtap="showAdd">+ 新增值班</button>
+      <button class="btn btn-default btn-sm" bindtap="showEdit" disabled="{{!selectedDuty}}">编辑所选</button>
+      <button class="btn btn-danger btn-sm" bindtap="deleteDuty" disabled="{{!selectedDuty}}">删除所选</button>
+    </view>
+    <view wx:if="{{duties.length>0}}">
+      <view class="duty-card {{selectedDutyId===item.id?'duty-sel':''}}" wx:for="{{duties}}" wx:key="id" bindtap="selectDuty" data-id="{{item.id}}">
+        <view class="duty-card-date">
+          <text class="duty-date">{{item.date}}</text>
+          <text class="duty-weekday">{{item.weekday}}</text>
+        </view>
+        <view class="duty-card-body">
+          <view class="duty-field"><text class="duty-label">时间：</text><text class="duty-value">{{item.startTime}} - {{item.endTime}}</text></view>
+          <view class="duty-field"><text class="duty-label">值班人员：</text><text class="duty-value person">{{item.dutyPerson}}</text></view>
+          <view class="duty-field"><text class="duty-label">地点：</text><text class="duty-value">{{item.location}}</text></view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{duties.length===0}}">暂无值班安排</view>
+  </view>
+
+  <!-- ===== 值班打卡（卡片式）===== -->
+  <view wx:if="{{activeTab===1}}" style="padding:20rpx 20rpx 40rpx">
+    <view class="card">
+      <view class="section-title">值班打卡</view>
+      <view class="form-group">
+        <view class="form-label">打卡人姓名</view>
+        <input class="form-input" placeholder="请输入打卡人姓名" value="{{checkinPerson}}" bindinput="onCheckinInput"/>
+      </view>
+    </view>
+
+    <view class="section-title" style="padding:20rpx 0 8rpx">请选择值班安排</view>
+    <view wx:if="{{duties.length>0}}">
+      <view class="duty-card {{selectedDutyId===item.id?'duty-sel':''}}" wx:for="{{duties}}" wx:key="id" bindtap="selectDuty" data-id="{{item.id}}">
+        <view class="duty-card-date">
+          <text class="duty-date">{{item.date}}</text>
+          <text class="duty-weekday">{{item.weekday}}</text>
+        </view>
+        <view class="duty-card-body">
+          <view class="duty-field"><text class="duty-label">时间：</text><text class="duty-value">{{item.startTime}} - {{item.endTime}}</text></view>
+          <view class="duty-field"><text class="duty-label">值班人员：</text><text class="duty-value person">{{item.dutyPerson}}</text></view>
+          <view class="duty-field"><text class="duty-label">地点：</text><text class="duty-value">{{item.location}}</text></view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{duties.length===0}}">暂无值班安排</view>
+
+    <button class="btn btn-primary btn-block" style="margin-top:24rpx" bindtap="doCheckin">立即打卡</button>
+  </view>
+
+  <!-- ===== 打卡记录（卡片式）===== -->
+  <view wx:if="{{activeTab===2}}" style="padding:16rpx 20rpx 40rpx">
+    <view wx:if="{{checkins.length>0}}">
+      <view class="duty-card" wx:for="{{checkins}}" wx:key="id">
+        <view class="duty-card-body">
+          <view class="duty-field"><text class="duty-label">打卡人：</text><text class="duty-value person">{{item.userName}}</text></view>
+          <view class="duty-field"><text class="duty-label">值班ID：</text><text class="duty-value">{{item.dutyId}}</text></view>
+          <view class="duty-field"><text class="duty-label">打卡时间：</text><text class="duty-value">{{item.checkinTime}}</text></view>
+          <view class="duty-field"><text class="duty-label">状态：</text><text class="badge badge-success">{{item.status}}</text></view>
+        </view>
+        <view class="duty-card-actions" wx:if="{{isAdmin}}">
+          <button class="btn btn-danger btn-sm" bindtap="deleteCheckinRecord" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{checkins.length===0}}">暂无打卡记录</view>
+  </view>
+</view>
+
+<!-- ===== 新增/编辑值班弹窗 ===== -->
+<view class="modal-mask" wx:if="{{showModal}}">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-header"><text class="modal-title">{{editMode?'编辑值班':'新增值班'}}</text><text class="modal-close" bindtap="closeModal">x</text></view>
+    <view class="modal-body">
+      <view class="form-group"><view class="form-label">日期</view><input class="form-input" placeholder="如 2026-07-08" value="{{formDate}}" data-field="formDate" bindinput="onFormField"/></view>
+      <view class="form-group"><view class="form-label">星期</view><input class="form-input" placeholder="如 星期一" value="{{formWeekday}}" data-field="formWeekday" bindinput="onFormField"/></view>
+      <view class="form-group"><view class="form-label">开始时间</view><input class="form-input" placeholder="如 14:00" value="{{formStart}}" data-field="formStart" bindinput="onFormField"/></view>
+      <view class="form-group"><view class="form-label">结束时间</view><input class="form-input" placeholder="如 17:00" value="{{formEnd}}" data-field="formEnd" bindinput="onFormField"/></view>
+      <view class="form-group"><view class="form-label">值班人员</view><input class="form-input" value="{{formPerson}}" data-field="formPerson" bindinput="onFormField"/></view>
+      <view class="form-group"><view class="form-label">地点</view><input class="form-input" value="{{formLocation}}" data-field="formLocation" bindinput="onFormField"/></view>
+    </view>
+    <view class="modal-footer"><button class="btn btn-default" bindtap="closeModal">取消</button><button class="btn btn-primary" bindtap="submitDuty">确认</button></view>
+  </view>
+</view>

@@ -1,0 +1,37 @@
+.dashboard { padding-bottom: 40rpx; }
+.header { background: linear-gradient(135deg, #2f5597, #3a6fbf); padding: 40rpx 30rpx 36rpx; }
+.header-title { color: #fff; font-size: 34rpx; font-weight: 700; margin-bottom: 6rpx; }
+.header-sub { color: rgba(255,255,255,0.75); font-size: 24rpx; }
+
+.user-bar { display: flex; align-items: center; justify-content: space-between; margin: 16rpx 20rpx; padding: 20rpx 24rpx; background: #fff; border-radius: 12rpx; box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04); }
+.user-info { display: flex; align-items: center; gap: 12rpx; }
+.user-icon { font-size: 32rpx; }
+.user-name { font-size: 28rpx; font-weight: 600; color: #333; }
+.badge-admin { background: #e8f0fe; color: #2f5597; padding: 4rpx 14rpx; border-radius: 20rpx; font-size: 20rpx; font-weight: 500; }
+.badge-staff { background: #e8f5e9; color: #2e7d32; padding: 4rpx 14rpx; border-radius: 20rpx; font-size: 20rpx; font-weight: 500; }
+.badge-reviewer { background: #fff3e0; color: #e65100; padding: 4rpx 14rpx; border-radius: 20rpx; font-size: 20rpx; font-weight: 500; }
+.btn-logout { font-size: 24rpx; color: #999; padding: 8rpx 20rpx; border: 1rpx solid #e0e0e0; border-radius: 8rpx; }
+.btn-group { display: flex; gap: 12rpx; }
+
+.stats-grid { display: flex; flex-wrap: wrap; padding: 16rpx 12rpx; gap: 14rpx; }
+.stat-card { flex: 1 1 29%; min-width: 160rpx; text-align: center; padding: 24rpx 12rpx; border-radius: 12rpx; }
+.stat-blue { background: linear-gradient(135deg, #e8f0fe, #d4e4fc); }
+.stat-green { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+.stat-orange { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+.stat-purple { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+.stat-teal { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
+.stat-value { font-size: 44rpx; font-weight: 800; color: #2f5597; margin-bottom: 4rpx; }
+.stat-green .stat-value { color: #2e7d32; }
+.stat-orange .stat-value { color: #e65100; }
+.stat-purple .stat-value { color: #7b1fa2; }
+.stat-teal .stat-value { color: #00695c; }
+.stat-label { font-size: 22rpx; color: #5a6378; }
+
+.cell-user { flex: 2; min-width: 120rpx; }
+.cell-material { flex: 3; min-width: 160rpx; }
+.cell-num { flex: 1; min-width: 80rpx; justify-content: center; }
+.cell-status { flex: 1.5; min-width: 100rpx; justify-content: center; }
+.cell-date { flex: 2.5; min-width: 160rpx; }
+.cell-week { flex: 1.5; min-width: 80rpx; }
+.cell-time { flex: 2.5; min-width: 180rpx; }
+.cell-person { flex: 1.5; min-width: 100rpx; }

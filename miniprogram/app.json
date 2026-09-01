@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/materials/index",
+    "pages/duty/index",
+    "pages/users/index",
+    "pages/login/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#2f5597",
+    "navigationBarTitleText": "908物资和值班管理系统",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f6fa"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#2f5597",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/materials/index",
+        "text": "物资",
+        "iconPath": "images/material.png",
+        "selectedIconPath": "images/material-active.png"
+      },
+      {
+        "pagePath": "pages/duty/index",
+        "text": "值班",
+        "iconPath": "images/duty.png",
+        "selectedIconPath": "images/duty-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

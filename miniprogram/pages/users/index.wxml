@@ -1,0 +1,39 @@
+<view class="page">
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <view class="empty" wx:if="{{!loading && users.length === 0}}">暂无用户</view>
+
+  <view wx:for="{{users}}" wx:key="id">
+    <view class="card">
+      <view class="row">
+        <view class="name">{{item.name || '未设置'}}</view>
+        <view>{{item.created_at}}</view>
+      </view>
+      <view class="meta">
+        <text class="role {{item.role === 'admin' ? 'admin' : 'staff'}}">{{item.role === 'admin' ? '管理员' : '工作人员'}}</text>
+        <text class="status {{item.status === 'active' ? 'active-s' : item.status === 'pending' ? 'pending-s' : 'disabled-s'}}">
+          {{item.status === 'active' ? '正常' : item.status === 'pending' ? '待审核' : '已禁用'}}
+        </text>
+      </view>
+
+      <!-- pending 用户 -->
+      <view class="actions" wx:if="{{item.status === 'pending'}}">
+        <view class="btn btn-approve" data-id="{{item.id}}" data-role="staff" bindtap="setRole">通过为工作人员</view>
+        <view class="btn btn-admin" data-id="{{item.id}}" data-role="admin" bindtap="setRole">设为管理员</view>
+        <view class="btn btn-disable" data-id="{{item.id}}" data-status="disabled" bindtap="setStatus">禁用</view>
+      </view>
+
+      <!-- active 用户 -->
+      <view class="actions" wx:if="{{item.status === 'active'}}">
+        <view class="btn" data-id="{{item.id}}" data-role="staff" bindtap="setRole">设为工作人员</view>
+        <view class="btn" data-id="{{item.id}}" data-role="admin" bindtap="setRole">设为管理员</view>
+        <view class="btn btn-disable" data-id="{{item.id}}" data-status="disabled" bindtap="setStatus">禁用</view>
+      </view>
+
+      <!-- disabled 用户 -->
+      <view class="actions" wx:if="{{item.status === 'disabled'}}">
+        <view class="btn btn-enable" data-id="{{item.id}}" data-status="active" bindtap="setStatus">重新启用</view>
+      </view>
+    </view>
+  </view>
+</view>

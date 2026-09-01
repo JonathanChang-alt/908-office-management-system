@@ -1,0 +1,85 @@
+<view class="dashboard">
+  <view class="header">
+    <view class="header-title">学生会办公室</view>
+    <view class="header-sub">908物资和值班管理系统</view>
+  </view>
+
+  <view class="user-bar" wx:if="{{user}}">
+    <view class="user-info">
+      <text class="user-icon">👤</text>
+      <text class="user-name">{{user.name}}</text>
+      <text class="badge {{user.role === 'admin' ? 'badge-admin' : user.role === 'reviewer' ? 'badge-reviewer' : 'badge-staff'}}">{{user.role === 'admin' ? '管理员' : user.role === 'reviewer' ? '审核体验' : '工作人员'}}</text>
+    </view>
+    <view class="btn-group">
+      <view class="btn-logout" wx:if="{{user.role === 'admin'}}" bindtap="onGoUsers">用户管理</view>
+      <view class="btn-logout" bindtap="onLogout">退出登录</view>
+    </view>
+  </view>
+
+  <view class="stats-grid">
+    <view class="stat-card stat-blue">
+      <view class="stat-value">{{stats.materialCount}}</view>
+      <view class="stat-label">物资种类</view>
+    </view>
+    <view class="stat-card stat-green">
+      <view class="stat-value">{{stats.totalAvailable}}</view>
+      <view class="stat-label">可借总量</view>
+    </view>
+    <view class="stat-card stat-orange">
+      <view class="stat-value">{{stats.unreturnedCount}}</view>
+      <view class="stat-label">未归还记录</view>
+    </view>
+    <view class="stat-card stat-purple">
+      <view class="stat-value">{{stats.dutyCount}}</view>
+      <view class="stat-label">本周值班</view>
+    </view>
+    <view class="stat-card stat-teal">
+      <view class="stat-value">{{stats.checkinCount}}</view>
+      <view class="stat-label">累计打卡</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">最近借还记录</view>
+    <view class="table-scroll" wx:if="{{recentRecords.length > 0}}">
+      <view class="table">
+        <view class="table-row table-header">
+          <view class="table-cell cell-user">借用人</view>
+          <view class="table-cell cell-material">物资</view>
+          <view class="table-cell cell-num">数量</view>
+          <view class="table-cell cell-status">状态</view>
+        </view>
+        <view class="table-row" wx:for="{{recentRecords}}" wx:key="id">
+          <view class="table-cell cell-user">{{item.userName}}</view>
+          <view class="table-cell cell-material">{{item.materialName}}</view>
+          <view class="table-cell cell-num">{{item.borrowNum}}</view>
+          <view class="table-cell cell-status">
+            <text class="badge {{item.status === '未归还' ? 'badge-warning' : 'badge-success'}}">{{item.status}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>暂无借还记录</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">本周值班安排</view>
+    <view class="table-scroll" wx:if="{{weekDuties.length > 0}}">
+      <view class="table">
+        <view class="table-row table-header">
+          <view class="table-cell cell-date">日期</view>
+          <view class="table-cell cell-week">星期</view>
+          <view class="table-cell cell-time">时间段</view>
+          <view class="table-cell cell-person">值班人</view>
+        </view>
+        <view class="table-row" wx:for="{{weekDuties}}" wx:key="id">
+          <view class="table-cell cell-date">{{item.date}}</view>
+          <view class="table-cell cell-week">{{item.weekday}}</view>
+          <view class="table-cell cell-time">{{item.startTime}} - {{item.endTime}}</view>
+          <view class="table-cell cell-person">{{item.dutyPerson}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>暂无值班安排</view>
+  </view>
+</view>

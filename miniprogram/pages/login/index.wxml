@@ -1,0 +1,20 @@
+<view class="login-page">
+  <view class="login-header">
+    <view class="logo">908</view>
+    <view class="title">学生会办公室</view>
+    <view class="subtitle">908物资和值班管理系统</view>
+  </view>
+
+  <view class="login-card">
+    <view class="form-group">
+      <view class="form-label">真实姓名</view>
+      <input class="form-input" placeholder="请输入真实姓名" value="{{name}}" bindinput="onNameInput" />
+    </view>
+
+    <button class="btn-login" bindtap="onLogin" loading="{{loading}}" disabled="{{loading}}">
+      {{loading ? '登录中...' : '微信一键登录'}}
+    </button>
+
+    <view class="hint">系统将通过微信账号识别身份，权限由管理员统一分配</view>
+  </view>
+</view>

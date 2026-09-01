@@ -1,0 +1,169 @@
+<view>
+  <view class="mat-tabs">
+    <view class="mat-tab {{activeTab===0?'on':''}}" bindtap="switchTab" data-index="0">物资台账</view>
+    <view class="mat-tab {{activeTab===1?'on':''}}" bindtap="switchTab" data-index="1">借用物资</view>
+    <view class="mat-tab {{activeTab===2?'on':''}}" bindtap="switchTab" data-index="2">归还物资</view>
+    <view class="mat-tab {{activeTab===3?'on':''}}" bindtap="switchTab" data-index="3">借还记录</view>
+  </view>
+
+  <!-- ===== 物资台账 ===== -->
+  <view wx:if="{{activeTab===0}}" style="padding:16rpx 20rpx 40rpx">
+    <view class="action-bar" wx:if="{{isAdmin}}">
+      <button class="btn btn-primary btn-sm" bindtap="showAddForm">+ 新增物资</button>
+    </view>
+    <view wx:if="{{materials.length>0}}">
+      <view class="mat-card" wx:for="{{materials}}" wx:key="id">
+        <view class="mat-card-header">
+          <view class="mat-card-title">{{item.name}}</view>
+          <view class="mat-card-badge">
+            <text class="status-tag {{item.status==='损坏'?'s-damaged':item.status==='已借完'||item.available<=0?'s-empty':'s-normal'}}">{{item.status==='损坏'?'损坏':item.status==='已借完'||item.available<=0?'已借完':'可借用'}}</text>
+          </view>
+        </view>
+        <view class="mat-card-body">
+          <view class="mat-field"><text class="mat-label">编号：</text><text class="mat-value code">{{item.code}}</text></view>
+          <view class="mat-field"><text class="mat-label">ID：</text><text class="mat-value">{{item.id}}</text></view>
+          <view class="mat-field"><text class="mat-label">分类：</text><text class="mat-value">{{item.category}}</text></view>
+          <view class="mat-field"><text class="mat-label">库存：</text><text class="mat-value stock">{{item.available}} / {{item.total}}</text></view>
+          <view class="mat-field"><text class="mat-label">位置：</text><text class="mat-value">{{item.location}}</text></view>
+        </view>
+        <view class="mat-card-actions" wx:if="{{isAdmin}}">
+          <button class="btn btn-warning btn-sm" bindtap="showEditForm" data-id="{{item.id}}">编辑</button>
+          <button class="btn btn-danger btn-sm" bindtap="onDelete" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{materials.length===0}}">暂无物资数据</view>
+  </view>
+
+  <!-- ===== 借用物资 ===== -->
+  <view wx:if="{{activeTab===1}}" style="padding:20rpx">
+    <view class="card">
+      <view class="section-title">借用物资</view>
+      <view class="form-group">
+        <view class="form-label">选择物资</view>
+        <picker mode="selector" range="{{pickerOptions}}" value="{{pickerIndex}}" bindchange="onPickerChange">
+          <view class="picker-box {{pickerIndex===-1?'picker-empty':''}}">{{pickerIndex===-1?'请选择要借用的物资':pickerOptions[pickerIndex]}}<text class="picker-arrow">&#x25BC;</text></view>
+        </picker>
+      </view>
+      <view class="info-card" wx:if="{{selectedMaterial}}">
+        <view class="info-header"><text class="info-name">{{selectedMaterial.name}}</text><text class="info-code">{{selectedMaterial.code}}</text></view>
+        <view class="info-row"><text class="info-label">分类</text><text class="info-val">{{selectedMaterial.category}}</text></view>
+        <view class="info-row"><text class="info-label">可借数量</text><text class="info-val info-green">{{selectedMaterial.available}}</text></view>
+        <view class="info-row"><text class="info-label">存放位置</text><text class="info-val">{{selectedMaterial.location}}</text></view>
+      </view>
+      <view class="form-group"><view class="form-label">借用人姓名</view><input class="form-input" value="{{borrowUserName}}" data-field="borrowUserName" bindinput="onBorrowField"/></view>
+      <view class="form-group"><view class="form-label">借用数量</view><input class="form-input" type="number" value="{{borrowNum}}" data-field="borrowNum" bindinput="onBorrowField"/></view>
+      <view class="form-group"><view class="form-label">借用用途</view><input class="form-input" value="{{borrowPurpose}}" data-field="borrowPurpose" bindinput="onBorrowField"/></view>
+      <view class="form-group">
+        <view class="form-label">借用备注（选填）</view>
+        <textarea class="form-textarea" value="{{borrowNote}}" data-field="borrowNote" bindinput="onBorrowField" placeholder="例如活动名称、使用场景等"/>
+      </view>
+      <button class="btn btn-primary btn-block" bindtap="confirmBorrow">确认借用</button>
+    </view>
+  </view>
+
+  <!-- ===== 归还物资 ===== -->
+  <view wx:if="{{activeTab===2}}" style="padding:16rpx 20rpx">
+    <view class="card" style="margin:0;padding:0">
+      <view class="table-scroll">
+        <view class="table" wx:if="{{unreturned.length>0}}">
+          <view class="table-row table-header">
+            <view class="table-cell" style="flex:0 0 60rpx;justify-content:center">ID</view>
+            <view class="table-cell" style="flex:1.2">借用人</view>
+            <view class="table-cell" style="flex:2">物资</view>
+            <view class="table-cell" style="flex:0 0 70rpx;justify-content:center">数量</view>
+            <view class="table-cell" style="flex:1.5">借用时间</view>
+            <view class="table-cell" style="flex:0 0 90rpx;justify-content:center">操作</view>
+          </view>
+          <view class="table-row" wx:for="{{unreturned}}" wx:key="id">
+            <view class="table-cell" style="flex:0 0 60rpx;justify-content:center">{{item.id}}</view>
+            <view class="table-cell" style="flex:1.2">{{item.userName}}</view>
+            <view class="table-cell" style="flex:2">{{item.materialName}}</view>
+            <view class="table-cell" style="flex:0 0 70rpx;justify-content:center">{{item.borrowNum}}</view>
+            <view class="table-cell" style="flex:1.5">{{item.borrowTime}}</view>
+            <view class="table-cell" style="flex:0 0 90rpx;justify-content:center">
+              <button class="btn btn-success btn-sm" bindtap="openReturnModal" data-id="{{item.id}}">归还</button>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{unreturned.length===0}}">暂无未归还记录</view>
+    </view>
+  </view>
+
+  <!-- ===== 借还记录（卡片式）===== -->
+  <view wx:if="{{activeTab===3}}" style="padding:16rpx 20rpx 40rpx">
+    <view wx:if="{{records.length>0}}">
+      <view class="rec-card" wx:for="{{records}}" wx:key="id">
+        <view class="rec-header">
+          <text class="rec-title">{{item.materialName}}</text>
+          <text class="badge {{item.status==='已归还'?'badge-success':'badge-warning'}}">{{item.status}}</text>
+        </view>
+        <view class="rec-body">
+          <view class="rec-row"><text class="rec-label">借用人：</text><text>{{item.userName}}</text></view>
+          <view class="rec-row"><text class="rec-label">数量：</text><text>{{item.borrowNum}}</text></view>
+          <view class="rec-row"><text class="rec-label">借用：</text><text>{{item.borrowTime}}</text></view>
+          <view class="rec-row" wx:if="{{item.returnTime}}"><text class="rec-label">归还：</text><text>{{item.returnTime}}</text></view>
+          <view class="rec-row note"><text class="rec-label">借用备注：</text><text class="rec-note-txt">{{item.borrowNote || '暂无'}}</text></view>
+          <view class="rec-row note"><text class="rec-label">归还备注：</text><text class="rec-note-txt">{{item.returnNote || '暂无'}}</text></view>
+          <view class="rec-row note admin"><text class="rec-label">管理员批注：</text><text class="rec-note-txt">{{item.adminComment || '暂无'}}</text></view>
+        </view>
+        <view class="rec-actions" wx:if="{{isAdmin}}">
+          <button class="btn btn-primary btn-sm" bindtap="openCommentModal" data-id="{{item.id}}">{{item.adminComment?'编辑批注':'添加批注'}}</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{records.length===0}}">暂无借还记录</view>
+  </view>
+</view>
+
+<!-- ===== 新增/编辑物资弹窗 ===== -->
+<view class="modal-mask" wx:if="{{showForm}}">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-header"><text class="modal-title">{{formTitle}}</text><text class="modal-close" bindtap="closeForm">x</text></view>
+    <view class="modal-body">
+      <view class="form-group"><view class="form-label">物资编号 *</view><input class="form-input" value="{{form.code}}" data-field="code" bindinput="onFormInput"/></view>
+      <view class="form-group"><view class="form-label">物资名称 *</view><input class="form-input" value="{{form.name}}" data-field="name" bindinput="onFormInput"/></view>
+      <view class="form-group"><view class="form-label">分类 *</view><input class="form-input" value="{{form.category}}" data-field="category" bindinput="onFormInput"/></view>
+      <view class="form-group"><view class="form-label">总量</view><input class="form-input" type="number" value="{{form.total}}" data-field="total" bindinput="onFormInput"/></view>
+      <view class="form-group"><view class="form-label">可借数量</view><input class="form-input" type="number" value="{{form.available}}" data-field="available" bindinput="onFormInput" disabled="{{availableLocked}}"/></view>
+      <view class="form-group"><view class="form-label">存放位置</view><input class="form-input" value="{{form.location}}" data-field="location" bindinput="onFormInput"/></view>
+      <view class="form-group">
+        <view class="form-label">物资状态</view>
+        <picker mode="selector" range="{{statusOptions}}" value="{{statusIndex}}" bindchange="onStatusChange">
+          <view class="picker-box">{{form.status || '请选择物资状态'}}<text class="picker-arrow">&#x25BC;</text></view>
+        </picker>
+      </view>
+    </view>
+    <view class="modal-footer"><button class="btn btn-default" bindtap="closeForm">取消</button><button class="btn btn-primary" bindtap="submitForm">确认</button></view>
+  </view>
+</view>
+
+<!-- ===== 归还备注弹窗 ===== -->
+<view class="modal-mask" wx:if="{{showReturnModal}}">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-header"><text class="modal-title">归还物资</text><text class="modal-close" bindtap="closeReturnModal">x</text></view>
+    <view class="modal-body">
+      <view class="ret-confirm"><text>确认归还「{{returnRecordName}}」？</text></view>
+      <view class="form-group" style="margin-top:20rpx">
+        <view class="form-label">归还备注（选填）</view>
+        <textarea class="form-textarea" value="{{returnNote}}" bindinput="onReturnNoteInput" placeholder="例如：设备完好、有轻微划痕等"/>
+      </view>
+    </view>
+    <view class="modal-footer"><button class="btn btn-default" bindtap="closeReturnModal">取消</button><button class="btn btn-success" bindtap="confirmReturnWithNote">确认归还</button></view>
+  </view>
+</view>
+
+<!-- ===== 管理员批注弹窗 ===== -->
+<view class="modal-mask" wx:if="{{showCommentModal}}">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-header"><text class="modal-title">管理员批注</text><text class="modal-close" bindtap="closeCommentModal">x</text></view>
+    <view class="modal-body">
+      <view class="form-group">
+        <view class="form-label">批注内容</view>
+        <textarea class="form-textarea" value="{{commentText}}" bindinput="onCommentInput" placeholder="请输入管理员批注"/>
+      </view>
+    </view>
+    <view class="modal-footer"><button class="btn btn-default" bindtap="closeCommentModal">取消</button><button class="btn btn-primary" bindtap="submitComment">保存</button></view>
+  </view>
+</view>
