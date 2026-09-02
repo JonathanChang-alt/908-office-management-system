@@ -28,12 +28,12 @@
 - [x] README.md
 - [x] DEVELOPMENT_LOG.md
 - [x] ARCHITECTURE.md
-- [ ] Real screenshots
+- [x] Real screenshots
 
 ## Git
 
 - [x] git init
 - [x] First commit
-- [ ] Private GitHub repository
-- [ ] GitHub security review
+- [x] Private GitHub repository
+- [x] GitHub security review
 - [ ] Public release

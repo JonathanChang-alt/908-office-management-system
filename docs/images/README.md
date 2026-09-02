@@ -1,17 +1,13 @@
 # 项目截图计划
 
-本目录用于存放项目运行截图。当前尚未放入图片。
+本目录用于存放项目运行截图。以下截图已全部加入：
 
-## 需要的截图
-
-| 文件名 | 内容 |
-| --- | --- |
-| `login.png` | 登录页面 |
-| `home.png` | 首页仪表盘 |
-| `materials.png` | 物资管理页面 |
-| `borrow-records.png` | 借还记录 |
-| `duty.png` | 值班管理页面 |
-| `users.png` | 用户管理页面 |
+- [x] `login.png` 登录页面
+- [x] `home.png` 首页仪表盘
+- [x] `materials.png` 物资管理页面
+- [x] `borrow-records.png` 借还记录
+- [x] `duty.png` 值班管理页面
+- [x] `users.png` 用户管理页面
 
 ## 截图要求
 

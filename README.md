@@ -199,31 +199,31 @@ npm start
 
 ## 项目截图
 
-以下为项目运行界面截图的规划位置，图片将来自微信开发者工具的真实运行界面。
+以下截图来自微信开发者工具的真实运行界面（演示数据，无真实用户信息）。
 
 ### 登录页面
 
-> Screenshot pending.
+![Login](docs/images/login.png)
 
 ### 首页
 
-> Screenshot pending.
+![Home](docs/images/home.png)
 
 ### 物资管理
 
-> Screenshot pending.
+![Materials](docs/images/materials.png)
 
 ### 借还记录
 
-> Screenshot pending.
+![Borrow Records](docs/images/borrow-records.png)
 
 ### 值班管理
 
-> Screenshot pending.
+![Duty Management](docs/images/duty.png)
 
 ### 用户管理
 
-> Screenshot pending.
+![User Management](docs/images/users.png)
 
 ## 开发过程
 
