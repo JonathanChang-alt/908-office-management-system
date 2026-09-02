@@ -108,9 +108,10 @@ SQLite 数据库
 │   ├── project.config.json
 │   └── sitemap.json
 ├── docs\
-│   ├── images\            项目截图（规划中）
+│   ├── images\            项目截图
 │   ├── DEVELOPMENT_LOG.md
-│   └── ARCHITECTURE.md
+│   ├── ARCHITECTURE.md
+│   └── PROJECT_HISTORY.md
 ├── .gitignore
 └── README.md
 ```
@@ -228,6 +229,8 @@ npm start
 ## 开发过程
 
 详见 [docs/DEVELOPMENT_LOG.md](docs/DEVELOPMENT_LOG.md)。
+
+项目完整历史梳理（开发时间线、发布过程与 Git 记录）详见 [docs/PROJECT_HISTORY.md](docs/PROJECT_HISTORY.md)。
 
 ## 系统架构说明
 

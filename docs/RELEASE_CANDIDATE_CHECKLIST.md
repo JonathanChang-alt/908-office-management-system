@@ -36,4 +36,4 @@
 - [x] First commit
 - [x] Private GitHub repository
 - [x] GitHub security review
-- [ ] Public release
+- [x] Public release
